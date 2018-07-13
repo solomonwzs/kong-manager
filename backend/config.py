@@ -18,6 +18,8 @@ class Config(object):
     PG_USER = ''
     PG_PASS = ''
 
+    KONG_ADM_HOST = 'http://192.168.197.130:9001'
+
     def pg_uri(self):
         if self.PG_USER != '' and self.PG_PASS != '':
             return f'postgresql://{self.PG_USER}:{self.PG_PASS}@\

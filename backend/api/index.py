@@ -8,9 +8,9 @@ from flask import (
     render_template,
 )
 
-index_page = Blueprint('index_page', __name__)
+index_api = Blueprint('index_api', __name__)
 
 
-@index_page.route('/')
+@index_api.route('/')
 def index():
     return render_template("index.html")
