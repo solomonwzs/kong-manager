@@ -31,7 +31,7 @@ def permission_ok(method, path):
                 methods=['POST', 'GET', 'PATCH', 'DELETE', 'PUT'])
 @api_auth
 def kong_proxy():
-    path = request.headers.get('X-Rf-Kong-Ep')
+    path = request.headers.get('X-Kong-Endpoint')
     method = request.method
     body = request.data
 

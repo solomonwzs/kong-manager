@@ -3,5 +3,5 @@ module.exports = {
   NODE_ENV: '"production"',
 
   API_URL: '"/api"',
-  COOKIE_F: '"x-rf-auth-cookie"'
+  COOKIE_F: '"x-kong-auth-cookie"'
 }

@@ -1,6 +1,6 @@
-# rf-kong-dashboard
+# kong-manager
 
-> rf-kong-dashboard
+> kong-manager
 
 ## Build Setup
 

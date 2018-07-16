@@ -18,20 +18,26 @@
         <services-list
           v-if="sNavActive === '1'"
           ></services-list>
+        <routes-list
+          v-if="sNavActive === '2'"
+          v-bind:serviceId="serviceId"
+          ></routes-list>
       </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
+import RoutesList from '../components/RoutesList'
 import ServicesList from '../components/ServicesList'
-import SidebarNav from '../components/SidebarNav.vue'
+import SidebarNav from '../components/SidebarNav'
 import UserManager from '../js/UserManager'
 
 export default {
   data () {
     return {
-      'sNavActive': '1'
+      'sNavActive': '1',
+      'serviceId': null
     }
   },
 
@@ -39,7 +45,8 @@ export default {
 
   components: {
     'services-list': ServicesList,
-    'sidebar-nav': SidebarNav
+    'sidebar-nav': SidebarNav,
+    'routes-list': RoutesList
   },
 
   methods: {

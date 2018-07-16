@@ -76,7 +76,7 @@ def parse_cookie(cookie):
 
 
 def _get_cookie_info():
-    cookie = request.headers.get('X-Rf-Api-Cookie')
+    cookie = request.headers.get('X-Kong-Api-Cookie')
     if cookie is not None:
         return parse_cookie(cookie.encode('utf8'))
     return None

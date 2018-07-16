@@ -47,8 +47,8 @@ export default {
       this.ksSerListLoading = true
       Axios.get(apiUrl, {
         headers: {
-          'X-Rf-Api-Cookie': cookie,
-          'X-Rf-Kong-Ep': '/services?' + query
+          'X-Kong-Api-Cookie': cookie,
+          'X-Kong-Endpoint': '/services?' + query
         }
       }).then(response => {
         var data = response.data
@@ -81,8 +81,8 @@ export default {
 
       Axios.patch(apiUrl, body, {
         headers: {
-          'X-Rf-Api-Cookie': cookie,
-          'X-Rf-Kong-Ep': '/services/' + id
+          'X-Kong-Api-Cookie': cookie,
+          'X-Kong-Endpoint': '/services/' + id
         }
       }).then(response => {
         if (onCb !== undefined) {
@@ -110,8 +110,8 @@ export default {
 
       Axios.post(apiUrl, data, {
         headers: {
-          'X-Rf-Api-Cookie': cookie,
-          'X-Rf-Kong-Ep': '/services/'
+          'X-Kong-Api-Cookie': cookie,
+          'X-Kong-Endpoint': '/services/'
         }
       }).then(response => {
         if (onCb !== undefined) {
@@ -132,8 +132,8 @@ export default {
 
       Axios.delete(apiUrl, {
         headers: {
-          'X-Rf-Api-Cookie': cookie,
-          'X-Rf-Kong-Ep': '/services/' + id
+          'X-Kong-Api-Cookie': cookie,
+          'X-Kong-Endpoint': '/services/' + id
         }
       }).then(response => {
         if (onCb !== undefined) {

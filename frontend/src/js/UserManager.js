@@ -40,7 +40,7 @@ export default {
 
       Axios.get(env.API_URL + '/user', {
         headers: {
-          'X-Rf-Api-Cookie': cookie
+          'X-Kong-Api-Cookie': cookie
         }
       }).then(respose => {
         this.user = {
