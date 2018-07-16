@@ -34,7 +34,6 @@ def kong_proxy():
     path = request.headers.get('X-Rf-Kong-Ep')
     method = request.method
     body = request.data
-    logging.debug(body)
 
     if not permission_ok(method, path):
         return jsonify({'message': 'unauthorized'}), 401
@@ -43,6 +42,7 @@ def kong_proxy():
     if len(body) != 0:
         headers['Content-Type'] = 'application/json'
 
+    logging.debug(body)
     res = requests.request(method, f'{cfg.KONG_ADM_HOST}{path}', data=body,
                            headers=headers)
     resp = make_response(res.text)

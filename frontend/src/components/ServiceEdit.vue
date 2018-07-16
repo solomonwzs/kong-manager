@@ -47,25 +47,29 @@ import KongServices from '../js/KongServices'
 import Vue from 'vue'
 
 export default {
-  props: ['serviceData', 'editOpt'],
+  props: ['serviceData', 'editOpt', 'oriServiceData'],
 
   mixins: [KongServices],
 
   methods: {
     updateOK (resp) {
-      var data = resp.data
-      for (var k in data) {
-        Vue.set(this.serviceData, k, data[k])
+      for (var k in resp.data) {
+        Vue.set(this.oriServiceData, k, resp.data[k])
       }
 
       var msg = {
         message: 'update service [' + this.serviceData.id + '] ok',
         type: 'success'
       }
-      this.$emit('closeEditDialog', msg)
+      this.$emit('eventCloseEditDialog', msg)
     },
 
     createOK (resp) {
+      var msg = {
+        message: 'add service [' + resp.data.id + '] ok',
+        type: 'success'
+      }
+      this.$emit('eventCloseEditDialog', msg, true)
     },
 
     saveFail (e) {

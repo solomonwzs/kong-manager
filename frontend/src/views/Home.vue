@@ -9,34 +9,43 @@
 
     <el-container>
       <el-aside width="20%">
+        <sidebar-nav
+          v-on:eventSelectSNav="selectSNav"
+          v-bind:sNavActive="sNavActive"></sidebar-nav>
       </el-aside>
 
       <el-main>
-        <services-list></services-list>
+        <services-list
+          v-if="sNavActive === '1'"
+          ></services-list>
       </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
-import UserManager from '../js/UserManager'
 import ServicesList from '../components/ServicesList'
+import SidebarNav from '../components/SidebarNav.vue'
+import UserManager from '../js/UserManager'
 
 export default {
   data () {
     return {
-      'x': 2,
-      'posts': {
-        'key': 'hello',
-        'value': 'world'
-      }
+      'sNavActive': '1'
     }
   },
 
   mixins: [UserManager],
 
   components: {
-    'services-list': ServicesList
+    'services-list': ServicesList,
+    'sidebar-nav': SidebarNav
+  },
+
+  methods: {
+    selectSNav (index) {
+      this.sNavActive = index
+    }
   },
 
   beforeMount () {

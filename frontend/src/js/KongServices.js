@@ -10,6 +10,16 @@ const apiUrl = env.API_URL + '/kong'
 export default {
   data () {
     return {
+      'checkType': {
+        'edit': {
+          'retries': 'int',
+          'port': 'int',
+          'connect_timeout': 'int',
+          'write_timeout': 'int',
+          'read_timeout': 'int'
+        }
+      },
+
       'ksReqPage': 0,
       'ksReqOffset': {
         0: ''
@@ -58,9 +68,14 @@ export default {
 
       var id = data.id
       var body = {}
+      var type = this.checkType.edit
       for (var k in data) {
         if (k !== 'id') {
-          body[k] = data[k]
+          if (type[k] === 'int') {
+            body[k] = Number(data[k])
+          } else {
+            body[k] = data[k]
+          }
         }
       }
 
@@ -86,10 +101,39 @@ export default {
         return
       }
 
+      var type = this.checkType.edit
+      for (var k in data) {
+        if (type[k] === 'int') {
+          Vue.set(data, k, Number(data[k]))
+        }
+      }
+
       Axios.post(apiUrl, data, {
         headers: {
           'X-Rf-Api-Cookie': cookie,
           'X-Rf-Kong-Ep': '/services/'
+        }
+      }).then(response => {
+        if (onCb !== undefined) {
+          onCb(response)
+        }
+      }).catch(error => {
+        if (errCb !== undefined) {
+          errCb(error)
+        }
+      })
+    },
+
+    ksDeleteService (id, onCb, errCb) {
+      const cookie = this.$cookie.get(env.COOKIE_F)
+      if (cookie === null) {
+        return
+      }
+
+      Axios.delete(apiUrl, {
+        headers: {
+          'X-Rf-Api-Cookie': cookie,
+          'X-Rf-Kong-Ep': '/services/' + id
         }
       }).then(response => {
         if (onCb !== undefined) {

@@ -34,6 +34,7 @@ export default {
     getUser () {
       const cookie = this.$cookie.get(env.COOKIE_F)
       if (cookie === null) {
+        this.$router.push('/login')
         return
       }
 
@@ -47,6 +48,7 @@ export default {
         }
       }).catch(error => {
         console.log(error)
+        this.$router.push('/login')
       })
     },
 

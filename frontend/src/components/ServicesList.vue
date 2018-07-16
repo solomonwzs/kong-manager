@@ -39,8 +39,14 @@
             <el-button
               size="mini"
               type="primary"
-              @click="openEditDialog('edit', scope.$index, scope.row)">
+              @click="openEditDialog('edit',scope.row)">
               edit
+            </el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="openDeleteDialog(scope.row.id)">
+              delete
             </el-button>
           </template>
         </el-table-column>
@@ -51,10 +57,21 @@
         width="60%"
         :visible.sync="showEditDialog" center>
         <service-edit
-          v-on:closeEditDialog="recvCED"
+          v-on:eventCloseEditDialog="closeEditDialog"
           v-bind:serviceData="edService"
+          v-bind:oriServiceData="oriService"
           v-bind:editOpt="edServiceOpt">
         </service-edit>
+      </el-dialog>
+
+      <el-dialog
+        title="delete"
+        :visible.sync="showDelDialog" center>
+        <p>delete service [{{ delServiceId }}]?</p>
+        <el-button
+          type="danger"
+          v-on:click="ksDeleteService(delServiceId,delOK,delFail)"
+          >enter</el-button>
       </el-dialog>
     </el-row>
 
@@ -77,7 +94,12 @@ export default {
   data () {
     return {
       'showEditDialog': false,
+      'showDelDialog': false,
+
+      'delServiceId': null,
+
       'edService': {},
+      'oriService': null,
       'edServiceOpt': ''
     }
   },
@@ -114,11 +136,12 @@ export default {
       this.ksListServices()
     },
 
-    openEditDialog (opt, index, row) {
+    openEditDialog (opt, row) {
       if (row !== undefined) {
         for (var k in row) {
           Vue.set(this.edService, k, row[k])
         }
+        this.oriService = row
       } else {
         this.edService = {}
       }
@@ -126,13 +149,47 @@ export default {
       this.showEditDialog = true
     },
 
-    recvCED (msg) {
+    openDeleteDialog (sid) {
+      console.log(sid)
+      this.delServiceId = sid
+      this.showDelDialog = true
+    },
+
+    delOK (resp) {
+      this.showDelDialog = false
+      this.refreshList()
+
+      this.$message({
+        message: 'delete service [' + this.delServiceId + '] ok',
+        type: 'success'
+      })
+    },
+
+    delFail (e) {
+      this.showDelDialog = false
+      this.$message({
+        message: 'error: ' + e.response.data.message,
+        type: 'error'
+      })
+    },
+
+    closeEditDialog (msg, refresh) {
       this.showEditDialog = false
       this.$message(msg)
+
+      if (refresh === true) {
+        this.refreshList()
+      }
+    },
+
+    refreshList () {
+      this.ksReqPage = 0
+      this.ksListServices()
     }
   },
 
   beforeMount () {
+    this.ksReqSize = 5
     this.ksListServices()
   }
 }

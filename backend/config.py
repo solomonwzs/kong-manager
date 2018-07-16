@@ -10,7 +10,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     DEBUG = True
-    SECRET_KEY = 'JPOaB5dREH0vONQSJzb6'
+    SECRET_KEY = 'MY_SECRET_KEY'
 
     PG_HOST = 'localhost'
     PG_PORT = 5432
